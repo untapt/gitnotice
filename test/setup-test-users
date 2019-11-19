@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# prerequisities
+
+REQS_SATISFIED=1
+
+if [[ ! -d "$PWD/repos/mario" ]]; then
+    echo "no mario, Mama-Mia "
+    REQS_SATISFIED=0
+fi
+if [[ ! -d "$PWD/repos/luigi" ]]; then
+    echo 'no repos/luigi directory found. Mama-mia!'
+    REQS_SATISFIED=0
+fi
+
+if [[ "$REQS_SATISFIED" -eq "0" ]]; then
+    echo 'view the docs in test/README.md to learn more about settup a test environment'
+    exit 2
+fi
+
+echo "Its properly set up"
+
