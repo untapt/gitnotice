@@ -1,0 +1,14 @@
+{
+  "name": "@untapt/gitnotice",
+  "version": "0.2.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gitnotice": "main.js"
+  },
+  "author": "nick@untapt.com <Nick Palenchar>",
+  "license": "ISC"
+}
