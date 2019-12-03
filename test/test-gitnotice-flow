@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+echo 'testing regular commit (there should be no notice)'
+sleep 1
+cd repos/mario
+echo "$(date) - itsa me" >> gitnotice-test.txt
+git add gitnotice-test.txt
+git commit -m 'Commit from Mario'
+git push origin master
+cd ../luigi
+git pull
+echo 'test done'
+cd ../..
+sleep 1
+
+echo 'testing gitnotice (there should be a notice)'
+sleep 1
+cd repos/mario
+echo "$(date) - be careful" >> gitnotice-test.txt
+git add gitnotice-test.txt
+git commit -m 'this should not be part of the notice #notice this is the notice'
+git push origin master
+cd ../luigi
+echo '!! When a notice appears, youll need to press enter'
+sleep 1
+git pull origin master
+echo 'test done'
+cd ../..
+

@@ -1,3 +1,8 @@
 #!/bin/bash
 
+rm repos/{mario,luigi}/.git/hooks/post-merge 2> /dev/null
+
+ln  ../post-merge repos/mario/.git/hooks/
+ln  ../post-merge repos/luigi/.git/hooks/
+
 # TODO soft link post-mere in each hook with gitnotice/post-merge. This will allow changes on gitnotice/post-merge to immediately work within the test repos
