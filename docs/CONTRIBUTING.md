@@ -1,6 +1,6 @@
 # How to Contribute
 
-Thank you for considering making a contribution to Untapt!
+Thank you for considering making a contribution to untapt!
 
 ## Issue assignments
 
