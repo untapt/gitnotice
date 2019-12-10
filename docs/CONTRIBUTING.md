@@ -10,7 +10,7 @@ Pull requests that close an issue not assigned to the requester are generally de
 
 #### Issue reassignment
 
-Issues that have had no activity by an assignee for a period of time will get pinged by a maintaiiner asking if more time is needed. The assignee can simply reply that more time is desired to keep the issue claimed. If instead there is no response in 48 hours, they will be unassigned, and the issue will be up for grabs 
+Issues that have had no activity by an assignee for a period of time will get pinged by a maintainer asking if more time is needed. The assignee can simply reply that more time is desired to keep the issue claimed. If instead there is no response in 48 hours, they will be unassigned, and the issue will be up for grabs 
 
 ## Issue submission
 
