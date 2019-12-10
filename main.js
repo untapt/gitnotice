@@ -1,16 +1,16 @@
 #! /usr/bin/env node
-const VERSION = '0.2.1';
+const VERSION = '0.3.0';
 const HOOK_VERSION = '0.2.0';
 const fs = require('fs');
-const { argv } = process;
+const {argv} = process;
 const path = require('path');
-const { exec } = require('child_process');
+const {exec, execSync} = require('child_process');
 
 
-if(argv.length < 3) {
+if (argv.length < 3) {
     // no arguments were passed
     console.log(
-`
+        `
 Usage:
 
 gitnotice init-all - from the working directory, initializes gitnotice hooks for all git projects found recursivly
@@ -21,7 +21,7 @@ gitnotice -v - print the version and exit
 }
 
 if (argv.includes('-v')) {
-    // console.log(`GITNOTICE - distributed notifications in your VCS\n`);
+    console.log(`GITNOTICE - distributed notifications in your VCS\n`);
     console.log(`gitnotice-cli: v${VERSION}`);
     console.log(`(notice-hook v${HOOK_VERSION})`)
 }
@@ -37,58 +37,76 @@ if (argv[2] === 'init-all') {
 
 if (argv[2] === 'init') {
     init(argv[3]);
-    console.log('gitnotice initialized ('+VERSION+')');
+    console.log('gitnotice initialized (' + VERSION + ')');
 }
 
 if (argv[2] === 'check') {
     check(argv[3]);
 }
 
-function initAll(directory='') {
+
+function initAll(directory = '') {
 
     const cwd = path.join(process.cwd(), directory);
 
     // console.log('checking ', cwd);
 
     if (fs.existsSync(path.join(cwd, '.git'))) {
-        // console.log('initializing in directoryyyy', directory);
         const initializedIn = init(directory);
         return [initializedIn];
     }
 
     const subfolders = fs.readdirSync(cwd).filter(item => {
-        // console.log ('itenmmm ', item);
-        // console.log('cwd???', cwd);
-        return fs.lstatSync(path.join(cwd,item)).isDirectory()
+        return fs.lstatSync(path.join(cwd, item)).isDirectory()
     });
 
     if (!subfolders.length) {
         return
     }
-    // console.log('subfolders ', subfolders);
     return [].concat(subfolders.map(subfolder => initAll(path.join(directory, subfolder))).filter(result => result && result.length));
 }
 
-function init(directory='.') {
+
+function init(directory = '.') {
     enforceGitExistsOrExit(directory);
     const cwd = path.join(process.cwd(), directory);
 
-    exec(`cp -f ${path.join(__dirname, 'post-merge')} .git/hooks/`, {cwd, timeout: 5}, (err, stdout, stderr) => {
-        if (err) {
-            // console.error(err);
-            // throw err;
-        }
-        if (stderr) {
-            // console.error(stderr);
-        }
-    });
+    // update notice-hook (also adds if it doesn't exist)
+    _copyProjectFileToDirectory('notice-hook', directory);
+
+    // If there's no post-merge hook, use ours
+    if (!fh.existsSync(path.join(cwd, '.git/hooks/post-merge'))) {
+        _copyProjectFileToDirectory('post-merge', '.git/hooks/')
+    }
+
+    // If the post-merge hook does not call post-merge, add a line to call it.
+    if (!execSync(`cat ${path.join(cwd, '.git/hooks/post-merge')} | grep "./notice-hook" || exit 0`)) {
+        execSync(`echo '## gitnotice (https://github.com/untapt/gitnotice)' >> ${path.join(cwd, '.git/hooks/post-merge')}`);
+        execSync(`echo './notice-hook' >> ${path.join(cwd, '.git/hooks/post-merge')}`);
+    }
 
     return cwd;
 
 }
 
+function _copyProjectFileToDirectory(file, directory = '.') {
+    if (!file) {
+        throw new Error('file name must be specified');
+    }
+    const cwd = path.join(process.cwd(), directory);
+    exec(`cp -f ${path.join(__dirname, file)}`, {cwd, timeout: 5}, (err, stdout, stderr) => {
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        if (stderr) {
+            console.error(stderr);
+        }
+    });
+}
 
-function check(directory='.') {
+
+function check(directory = '.') {
     enforceGitExistsOrExit(directory);
     const cwd = path.join(process.cwd(), directory);
     exec(`cat ${path.join(cwd, directory, '.git/hooks/post-merge')} | head -n 2 | tail -n 1`, {cwd}, (err, stdout, stderr) => {
@@ -101,9 +119,9 @@ function check(directory='.') {
 }
 
 
-function enforceGitExistsOrExit(directory='.') {
+function enforceGitExistsOrExit(directory = '.') {
     const cwd = path.join(process.cwd(), directory);
-    if(!fs.existsSync(path.join(cwd, '.git'))) {
+    if (!fs.existsSync(path.join(cwd, '.git'))) {
         console.error("No git project found");
         process.exit(2);
     }
