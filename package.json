@@ -1,7 +1,7 @@
 {
   "name": "@untapt/gitnotice",
-  "version": "0.2.1",
-  "description": "",
+  "version": "0.3.3",
+  "description": "GITNOTICE - distributed notifications in your VCS",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,5 +10,8 @@
     "gitnotice": "main.js"
   },
   "author": "nick@untapt.com <Nick Palenchar>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
 }
