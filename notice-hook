@@ -1,0 +1,24 @@
+#!/bin/bash
+#v0.2.0
+
+    _START=$(git reflog | awk 'NR==2 { print $1}')
+    _NOTICES=$(git log $_START..HEAD --pretty=format:'%h %an:$$ %s' | awk '/\#notice/ {print}' | sed 's/\$\$.*#notice//g')
+
+
+    _FILE="/tmp/$(date +"%s")-notice"
+    touch $_FILE
+
+    if [[ -z "$_NOTICES" ]]; then
+        exit 0
+    fi
+
+    echo "" >> $_FILE
+    echo "*********************" >> $_FILE
+    echo "::   GIT NOTICES   ::" >> $_FILE
+    echo "*********************" >> $_FILE
+    echo "" >> $_FILE
+
+    echo "$_NOTICES" >> $_FILE
+    echo "" >> $_FILE
+
+    more < $_FILE
