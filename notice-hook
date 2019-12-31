@@ -2,7 +2,6 @@
 #v0.2.0
 
     _START=$(git reflog | awk 'NR==2 { print $1}')
-    #git log $_START..HEAD # | awk '/\#notice/ { print }'
     _NOTICES=$(git log $_START..HEAD --pretty=format:'%h %an:$$ %s' | awk '/\#notice/ {print}' | sed 's/\$\$.*#notice//g')
 
 
@@ -19,23 +18,6 @@
     echo "*********************" >> $_FILE
     echo "" >> $_FILE
 
-    #cat $_FILE
-    #echo notise eeeeee is $_NOTICES
-    #echo "$_NOTICES"
-    #echo "$_NOTICES" | wc
-    #echo "$_NOTICES" | wc -l
-
-#    _NOTICELINES=$(echo "$_NOTICES" | wc -l)
-#    #echo lines are $_NOTICELINES
-#    for line in $(seq 1 $_NOTICELINES); do
-#        #echo using notic $line
-#        notice=$(echo "$_NOTICES" | sed "$line !d")
-#        #echo notice issssssss $notice
-#        _HASH=$(echo $notice | cut -d' ' -f 1)
-#        _AUTHOR=$(git show -s --format='%ae' $HASH)
-#        _NOTICETEXT=$(echo $notice |  sed 's/.*#notice\(.*\)/\1/g')
-#        echo "$_HASH: $_AUTHOR: $_NOTICETEXT" >> $_FILE
-#    done
     echo "$_NOTICES" >> $_FILE
     echo "" >> $_FILE
 

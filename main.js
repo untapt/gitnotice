@@ -23,7 +23,7 @@ gitnotice -v - print the version and exit
 if (argv.includes('-v')) {
     console.log(`GITNOTICE - distributed notifications in your VCS\n`);
     console.log(`gitnotice-cli: v${VERSION}`);
-    console.log(`(notice-hook v${HOOK_VERSION})`)
+    console.log(`notice-hook:   v${HOOK_VERSION}`);
 }
 
 if (argv[2] === 'init-all') {
@@ -48,8 +48,6 @@ if (argv[2] === 'check') {
 function initAll(directory = '') {
 
     const cwd = path.join(process.cwd(), directory);
-
-    // console.log('checking ', cwd);
 
     if (fs.existsSync(path.join(cwd, '.git'))) {
         const initializedIn = init(directory);
