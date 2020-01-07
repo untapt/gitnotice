@@ -37,7 +37,7 @@ if (argv[2] === 'init-all') {
 
 if (argv[2] === 'init') {
     init(argv[3]);
-    console.log('gitnotice initialized (' + VERSION + ')');
+    console.log('gitnotice initialized (notice-hook: ' + HOOK_VERSION + ')');
 }
 
 if (argv[2] === 'check') {
@@ -92,7 +92,7 @@ function _copyProjectFileToDirectory(file, directory = '.') {
         throw new Error('file name must be specified');
     }
     const cwd = path.join(process.cwd(), directory);
-    exec(`cp -f ${path.join(__dirname, file)}`, {cwd, timeout: 5}, (err, stdout, stderr) => {
+    exec(`cp -f ${path.join(__dirname, file)} .`, {cwd, timeout: 5}, (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             throw err;
