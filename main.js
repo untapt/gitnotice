@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const VERSION = '0.3.3';
+const VERSION = '0.3.5';
 const HOOK_VERSION = '0.2.0';
 const fs = require('fs');
 const {argv} = process;

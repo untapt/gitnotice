@@ -1,6 +1,6 @@
 {
   "name": "gitnotice",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "GITNOTICE - distributed notifications in your VCS",
   "repository": "https://github.com/untapt/gitnotice",
   "main": "main.js",
@@ -11,7 +11,7 @@
     "gitnotice": "main.js"
   },
   "author": "nick@untapt.com <Nick Palenchar>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^24.9.0"
   }
