@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 const HOOK_VERSION = '0.2.0';
 const fs = require('fs');
 const {argv} = process;
@@ -70,11 +70,11 @@ function init(directory = '.') {
     const cwd = path.join(process.cwd(), directory);
 
     // update notice-hook (also adds if it doesn't exist)
-    _copyProjectFileToDirectory('notice-hook', directory);
+    _copyProjectFileToDirectory('notice-hook', directory + '/.git/hooks/');
 
     // If there's no post-merge hook, use ours
     if (!fs.existsSync(path.join(cwd, '.git/hooks/post-merge'))) {
-        _copyProjectFileToDirectory('post-merge', '.git/hooks/')
+        _copyProjectFileToDirectory('post-merge', directory + '/.git/hooks/')
     }
 
     // If the post-merge hook does not call post-merge, add a line to call it.
