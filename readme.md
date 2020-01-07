@@ -49,7 +49,7 @@ Ben can rest easy knowing exactly what to update since last pulling this breakin
 ## Setup
 
 ```shell
-$ npm i -g @untapt/gitnotice
+$ npm i -g gitnotice
 ```
 
 gitnotice's hook operates on local git repos, so each one needs to be setup manually. The gitnotice CLI (installed via npm) automates most of this.

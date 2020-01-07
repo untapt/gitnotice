@@ -1,7 +1,8 @@
 {
-  "name": "@untapt/gitnotice",
+  "name": "gitnotice",
   "version": "0.3.3",
   "description": "GITNOTICE - distributed notifications in your VCS",
+  "repository": "https://github.com/untapt/gitnotice",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
