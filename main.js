@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const VERSION = '0.5.0';
+const VERSION = '0.5.1';
 const HOOK_VERSION = '0.2.0';
 const fs = require('fs');
 const {argv} = process;
@@ -15,7 +15,6 @@ Usage:
 
 gitnotice init-all - from the working directory, initializes gitnotice hooks for all git projects found recursivly
 gitnotice init [directory] - initialize gitnotice hook in directory, or in current project.
-gitnotice check - check if gitnotice is initialize in current project (must be at root level where .git resides)
 gitnotice -v - print the version and exit
 `)
 }
@@ -108,7 +107,7 @@ function check(directory = '.') {
     enforceGitExistsOrExit(directory);
     const cwd = path.join(process.cwd(), directory);
     exec(`cat ${path.join(cwd, directory, '.git/hooks/post-merge')} | head -n 2 | tail -n 1`, {cwd}, (err, stdout, stderr) => {
-        const match = stdout.match(/#(v[\d.\w]*)/);
+        const match = stdout.match(/\.\/notice-hook/);
         if (match && match.length > 1) {
             console.log(`✅ gitnotice (${match[1]}) initialized in ${path.join(cwd, directory)}`);
         }

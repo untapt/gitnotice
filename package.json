@@ -1,6 +1,6 @@
 {
   "name": "gitnotice",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "GITNOTICE - distributed notifications in your VCS",
   "repository": "https://github.com/untapt/gitnotice",
   "main": "main.js",
